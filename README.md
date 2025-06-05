@@ -30,7 +30,8 @@ yarn build && yarn start
 
 ### Back-End
 
+- Task schema names were defined in portuguese to follow the convention asked on the briefing;
 - I started building a memory storage class. However, next.js in development
-wasn't friendly with it - wiping memory constantly on dev environment - so I decided to move to a plain JSON storage. A decorator could cleanup the calls to fetch/write the file, but overall it wouldn't scale nicely, being only usable at this exercise; An object was used as the root for rapid queries.
+wasn't friendly with it - wiping memory constantly on dev environment - so I decided to move to a plain JSON storage. A decorator could cleanup the calls to fetch/write the file, but overall it wouldn't scale nicely, being only usable at this exercise; An object was used as the root for rapid queries;
 - There is a clear division of layers routers -> controllers -> repository to enable future usage of other repository or router layers, allowing other architectures such as REST/graphQL and other database solutions;
 - Each layer was built to enable easy mocking and testability - which couldn't be done within the timeframe provided.
