@@ -17,21 +17,32 @@ const taskUpdateSchema = z.object({
     update: taskInputSchema,
 })
 
+//mockDelay was introduced to simulate a delay in the API response,
+//as it is likely that the API will have some delay in a real-world scenario.
+const mockDelay = (ms: number = 200) => new Promise(resolve => setTimeout(resolve, ms));
+
 const taskController = new TaskController(new MemoryTaskRepository())
 
 export const taskRouter = router({
-  list: procedure.input(z.null()).query(() => {
+  findAll: procedure.query(() => {
     return taskController.findAll();
+  }),
+  findOneById: procedure.input(z.string()).query(async ({ input }) => {
+    const id = input;
+    return taskController.findById(id);
   }),
   delete: procedure.input(taskDeleteSchema).mutation(async ({ input }) => {
     const { id } = input;
+    await mockDelay();
     return taskController.deleteTask(id)
   }),
   create: procedure.input(taskInputSchema).mutation(async ({ input }) => {
-    return taskController.createTask(input);
+    await mockDelay();
+    taskController.createTask(input);
   }),
-  modify: procedure.input(taskUpdateSchema).mutation(async ({ input }) => {
+  updateOne: procedure.input(taskUpdateSchema).mutation(async ({ input }) => {
     const { id, update } = input;
+    await mockDelay();
     return taskController.updateTask( id, update );
   })
 });

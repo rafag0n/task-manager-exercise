@@ -1,8 +1,14 @@
 import type { AppType } from 'next/app';
 import { trpc } from '../utils/trpc';
+import { ToastContainer } from 'react-toastify';
+import '../styles.css';
 
-const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+
+const App: AppType = ({ Component, pageProps }) => {
+  return <>
+    <Component {...pageProps} />
+    <ToastContainer />
+  </>
 };
 
-export default trpc.withTRPC(MyApp);
+export default trpc.withTRPC(App);

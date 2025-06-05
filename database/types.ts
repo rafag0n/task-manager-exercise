@@ -1,7 +1,7 @@
-import { Task, TaskDelete, TaskInput, TaskUpdate } from "../server/types/task";
+import { Task, TaskDelete, TaskInput, TaskUpdate } from "../types/task";
 
-export type MemoryDatabaseBase = {
-    database: Database;
+export type JSONDatabaseBase = {
+    snapshot: DatabaseSnapshot;
     create: <K extends keyof DatabaseTypes>(type: K, data: Omit<DatabaseTypes[K], 'id'>) => string;
     deleteById: <K extends keyof DatabaseDelete>(type: K, id: string) => void;
     updateById: <K extends keyof DatabaseUpdate>(type: K, id: string, data: DatabaseUpdate[K]) => void;
@@ -9,7 +9,7 @@ export type MemoryDatabaseBase = {
     findAll: <K extends keyof DatabaseTypes>(type: K) => DatabaseTypes[K][];
 }
 
-export type Database = {
+export type DatabaseSnapshot = {
     [collection: string]: { [id: string]: Task }
 };
 
